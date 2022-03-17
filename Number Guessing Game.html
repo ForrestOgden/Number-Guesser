@@ -1,0 +1,221 @@
+<DOCTYPE! html>
+<meta name="author" content="Forrest"
+<head><title>empty practices</title>
+<style>
+section {border: 3px solid blue; padding: 3px;}
+body {background-color: #435554; color:black;}
+
+@font-face {
+  font-family: DigitalDare;
+  src: url('DigitalDare.otf');
+}
+
+h1 {color:#f8ffff; font-family: DigitalDare; letter-spacing: 2px; text-shadow: 3px 3px 5px black; font-size: 65px;
+    position: relative; top: 75px; text-align: center;}
+
+h1:hover {text-shadow: 0px 0px 25px orange;}
+
+
+#check {
+  position: relative;
+  left: 600px;
+  top: 275px;
+  width:150px;
+  height:50px;
+  background: #befafa;
+  box-shadow: 4px 4px 4px black;
+  font-family: DigitalDare;
+  letter-spacing: 1px;
+  color: #ffd631;
+  text-shadow: 2px 2px 6px black;
+  border-radius: 15px;
+  font-size: 20px;
+}
+
+#check:hover {   background: #9fd1d1;}
+
+.number {
+  position: relative;
+  text-align: center;
+  top: -20px;
+  font-size: 100px;
+  text-shadow:  0px 0px 12px white;
+  color:white;
+
+}
+
+.guess {
+  position: relative;
+  top: 300px;
+  left: 550px;  
+  width: 250px;
+  margin: 0
+  height:100px;
+  font-family: DigitalDare;
+  font-size: 80px;
+  box-shadow: 3px 3px 5px black;
+  color: orange;
+  text-shadow: 3px 3px 3px darkred;
+  text-align: center;
+  
+}
+
+.again {
+  position: relative;
+  left: 400px;
+  top: 100px;
+  font-family: DigitalDare;
+  font-size: 55px;
+  border: 4px solid white;
+  border-radius: 20px;
+  width: 500px;
+  text-align: center;
+  cursor: pointer;
+
+}
+
+.result{
+color: #f8fc2e;
+font-size: 25px;
+font-family: DigitalDare;
+text-shadow: 3px 3px 5px black;
+position: relative;
+left:10px;
+}
+
+
+.score {
+color: #bdff7c;
+font-size: 25px;
+font-family: DigitalDare;
+text-shadow: 3px 3px 5px black;
+position: relative;
+left:10px;
+}
+
+.highscore {
+color: #ffd671;
+font-size: 25px;
+font-family: DigitalDare;
+text-shadow: 3px 3px 5px black;
+position: relative;
+left:10px;
+}
+
+
+.again:hover {background: #ECEEED }
+
+
+</style>
+</head>
+
+  <body>
+    <h1 class='example'> Guess the Number! </h1>
+
+<input type='number' class='guess' min='1' max='10'>
+<button id='check'> Check! </button>
+
+<br/><br/>
+
+<div class='number'> </div>
+<div class='result'> </div>
+<div class='score'> </div>
+<div class='highscore'> </div>
+
+<br/><br/>
+
+<div class='again'> Play again! </div>
+
+
+
+<script>
+'use strict';
+
+let score = 20;
+let highscore=0;
+let secretNumber = Math.trunc(Math.random() * 10) + 1;             
+
+document.querySelector('.number').textContent = '?';
+
+document.querySelector('.result').textContent = 'Start guessing...';         
+
+document.querySelector('.score').textContent = `Guesses left (score): ${score}`;
+document.querySelector('.highscore').textContent = `High Score: ${highscore}`;
+
+
+
+document.querySelector('.again').addEventListener('click', function() {  
+  score = 20;
+  document.querySelector('.score').textContent = `Guesses left (score): ${score}`;
+  secretNumber = Math.trunc(Math.random() * 10) + 1;
+  document.querySelector('.guess').value = '';
+  document.querySelector('.result').textContent = 'Start guessing...';
+  document.querySelector('.number').textContent = '?';
+  document.body.style.background = '#435554';
+  
+});
+  
+
+
+
+document.querySelector('#check').addEventListener('click', function() {
+
+  const guess = Number(document.querySelector('.guess').value);     
+  
+  console.log(guess);
+
+  if (!guess) {
+    alert('You must select a number!');
+} 
+
+  if (guess === secretNumber) {
+    document.querySelector('.result').textContent = 'Correct Number!!!';
+    document.querySelector('.number').textContent = secretNumber;
+    document.body.style.background = '#60b347';
+
+      if (score > highscore) {
+        highscore = score;
+        document.querySelector('.highscore').textContent = `High Score: ${highscore}`;
+      }  
+
+
+} else if (guess > secretNumber) {
+    if (score > 1) {
+      document.querySelector('.result').textContent = 'Too high! Guess again!';
+      score--;   
+      document.querySelector('.score').textContent = `Guesses left (score): ${score}`;
+    } else {
+        document.querySelector('.result').textContent = 'You lost the game!';
+        document.querySelector('.score').textContent = 0;
+      }
+}                                                                           // since the score was decremeneted, the updated score needs displayed
+  else if (guess < secretNumber) {
+    if(score > 1) {
+      document.querySelector('.result').textContent = 'Too low! Guess again!'; 
+      score--;   
+      document.querySelector('.score').textContent = `Guesses left (score): ${score}`;
+    } else {
+        document.querySelector('.result').textContent = 'You lost the game!';
+        document.querySelector('.score').textContent = 0;
+      } 
+}
+
+
+});
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+
+</html>
